@@ -14,7 +14,7 @@ int main () {
   scanf ("%ld", &n);
   
   double tau = 1. / n;
-  printf ("Step of RK's algoritm = %.4lf(%le)\n", tau, tau);
+  printf ("Step of Runge-Kutta algorithm = %.4lf(%le)\n", tau, tau);
   
   boundary_conditions bc_0 (X1_0, X2_0, P1_0, P2_0); 
   boundary_conditions bc_1 (X1_1, X2_1, 0, 0);
