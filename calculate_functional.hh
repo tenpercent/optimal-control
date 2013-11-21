@@ -12,8 +12,8 @@ double simpson_formula (
 );
 
 double calculate_functional (
-    double const                  tau,  // step
-    size_t const                  n,    // step numbers
-    boundary_conditions const &   bc_0, // start conditions
-    double const                  alpha // parameter
+    double const                  step_length,  // step
+    size_t const                  total_steps,    // step numbers
+    boundary_conditions const &   bc_start, // start conditions
+    double const                  parameter // parameter
 );
