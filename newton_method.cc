@@ -147,7 +147,7 @@ int newton_method (
       bc_0.p1 = next_p1;
       bc_0.p2 = next_p2;
       bc_1.p1 = ret1.p1;
-      bc_1.p1 = ret1.p1;
+      bc_1.p2 = ret1.p2;
 
       residual = next_error;
       ++i;
