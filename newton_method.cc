@@ -2,6 +2,40 @@
 #include "newton_method.hh"
 #include "defs.hh"
 
+void get_jakobi_matrix_values (
+    double & J11, 
+    double & J12, 
+    double & J21, 
+    double & J22,
+    boundary_conditions const & bc_start,
+    double const step_length,
+    size_t const total_steps,
+    double parameter
+) 
+{
+  boundary_conditions bc_start_copy, extrapolate_original, extrapolate_variated;
+  
+  bc_start_copy = bc_start;
+  extrapolate_original = 
+    runge_kutta_method (step_length, total_steps, bc_start_copy, parameter);
+
+  bc_start_copy = bc_start; // not necessary
+  bc_start_copy.p1 += DELTA;
+  extrapolate_variated = 
+    runge_kutta_method (step_length, total_steps, bc_start_copy, parameter);
+
+  J11 = (extrapolate_variated.x1 - extrapolate_original.x1) / DELTA;
+  J12 = (extrapolate_variated.x2 - extrapolate_original.x2) / DELTA;
+
+  bc_start_copy = bc_start; // strictly necessary
+  bc_start_copy.p2 += DELTA;
+  extrapolate_variated = 
+    runge_kutta_method (step_length, total_steps, bc_start_copy, parameter);
+
+  J21 = (extrapolate_variated.x1 - extrapolate_original.x1) / DELTA;
+  J22 = (extrapolate_variated.x2 - extrapolate_original.x2) / DELTA;
+}
+
 int newton_method (
     double const                 tau,  // step
     size_t const                 n,    // step numbers
@@ -65,7 +99,7 @@ int newton_method (
           det = J11 * J22 - J12 * J21;
           
           if (fabs (det) < MINIMAL_FOR_COMPARE)
-            return 100; // infernal error
+            return 42; // infernal error
 
           next_p1 = bc_0.p1 - gamma * ((ret1.x1 - bc_1.x1) * J22 - (ret1.x2 - bc_1.x2) * J12) / det;
           next_p2 = bc_0.p2 - gamma * ((ret1.x2 - bc_1.x2) * J11 - (ret1.x1 - bc_1.x1) * J21) / det;
