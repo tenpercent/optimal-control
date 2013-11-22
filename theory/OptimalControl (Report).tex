@@ -1,0 +1,241 @@
+\documentclass[24pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[russian]{babel}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\textheight=24cm
+\textwidth=16cm
+\oddsidemargin=0pt
+\topmargin=-3cm
+\parindent=24pt
+\parskip=0pt
+\tolerance=2000
+\flushbottom
+
+\title{Поиск минимума функционала (решение задачи, допустим, Лагранжа)}
+\author{Подкорытов М. Д.}
+
+\begin{document}
+\maketitle
+
+\section{Постановка задачи}
+Требуется найти решение следующей задачи:
+
+\[
+\int\limits_0^1u^2(t)dt \rightarrow \inf, \, u(t) = \ddot x - x\cos \alpha \dot x,
+\]
+\[
+x(0) = 0, \, x(1) = \sinh 1,\, \dot x(0) = 0,\, \dot x(1) = e 
+\]
+при значениях параметра $\alpha \in \{0, 0.01, 0.5, 1.5, 10.5\}$.
+
+\section{Сведение задачи к решению системы дифференциальных уравнений}
+\subsection{Замена переменных}
+$
+\begin{cases}
+x_1 = x\\
+x_2 = \dot x_1 \\
+\dot x_2 = u + x_1 \cos \alpha x_2
+\end{cases}
+\Rightarrow\,\,\,\,\,\,\,\,\,
+\begin{cases}
+\dot x_1  = x_2\\
+\dot x_2 = u + x_1 \cos \alpha x_2
+\end{cases}
+$
+\subsection{Функция Лагранжа}
+$$
+L(t, x, \dot x, p, u, \lambda, x(0), \dot x(0), x(1), \dot x(1)) = \int\limits_0^1\left(\lambda_0u^2\left(t\right)+p_1\left(t\right)\left(\dot x_1 - x_2\right) + p_2\left(t\right)\left(\dot x_2 - u - x_1\cos\alpha x_2\right)\right)dt \,\,\, + 
+$$
+\\
+$$
++ \,\,\, \lambda_1x(0) + \lambda_2 \left(x\left(1\right) - \sinh 1\right) + \lambda_3 x_2(0) + \lambda_4 \left(x_2(1) - e\right)
+$$
+\subsection{Уравнения Эйлера}
+$
+\frac{d}{dt} (L_{\dot x}) - L_{x} = 0 \Rightarrow 
+\begin{cases}
+-\dot p_1\left(t\right) - p_2\left(t\right)\cos\alpha x_2\left(t\right) = 0\\
+-\dot p_2\left(t\right) - p_1\left(t\right) + x_1\left(t\right)p_2\left(t\right)\alpha\sin\alpha x_2\left(t\right) = 0
+\end{cases}
+$
+\subsection{Условия трансверсальности}
+$
+\begin{cases}
+p_1(0) = L_{x_1(0)} = \lambda_1\\
+p_2(0) = L_{x_2(0)} = \lambda_3\\
+p_1(1) = -L_{x_1(1)} = -\lambda_2\\
+p_2(1) = -L_{x_2(1)} = -\lambda_4
+\end{cases}
+$
+\subsection{Условие стационарности по $u(t)$}
+$
+\frac{d}{du}L = 0 \Rightarrow 2\lambda_0u(t) + p_2(t) = 0
+$
+\subsection{Появление системы дифференциальных уравнений}
+Положив $\lambda_0 = 0$, получим, что $p_2(t) = 0 \rightarrow$ (из условий трансверсальности) $\lambda_i = 0$. Случай $\lambda = 0$ нас не устраивает; поэтому положим $\lambda_0 = -0.5$.
+
+Объединив уравнения Эйлера, условия трансверсальности и условие стационарности по $u(t)$ получим необходимые условия для функции, являющейся решением задачи. Эти условия записываются в виде следующей системы дифференциальных уравнений:
+
+$
+\begin{cases}
+\dot x_1(t) = x_2(t)\\
+\dot x_2(t) = p_2(t) +x_1(t)\cos\alpha x_2 (t)\\
+\dot p_1(t) = -p_2(t)\cos\alpha x_2(t)\\
+\dot p_2(t) = -p_1(t) + x_1(t)p_2(t)\alpha\sin\alpha x_2(t)\\
+x_1(0) = 0\\
+x_2(0) = 0\\
+x_1(1) = \sinh 1\\
+x_2(1) = e\\
+\end{cases}
+$
+\section{Вычисления}
+\subsection{Решение системы дифференциальных уравнений}
+\subsubsection{Решение системы при значении параметра $\alpha = 0$}
+$
+\begin{cases}
+\dot x_1 = x_2\\
+\dot x_2 = p_2 + x_1\\
+\dot p_1 = -p_2\\
+\dot p_2 = -p_1\\
+x_1(0) = 0\\
+x_2(0) = 0\\
+x_1(1) = \sinh 1\\
+x_2(1) = e\\
+\end{cases}
+$\\
+$
+\begin{cases}
+\dot x_1 = x_2\\
+\dot x_2 = -p_2 + x_1\\
+p_1(t) = A \sinh t + B \cosh t\\
+p_2(t) = -B \sinh t - A \cosh t\\
+x_1(0) = 0\\
+x_2(0) = 0\\
+x_1(1) = \sinh 1\\
+x_2(1) = e\\
+\end{cases}
+$
+\\
+$
+\begin{cases}
+x_1(t) = t\sinh t\\
+x_2(t) = \sinh t + t\cosh t\\
+\dot x_1 = x_2\\
+\dot x_2 = p_2 + x_1\\
+\end{cases}
+$
+\\
+$
+\begin{cases}
+x_1(t) = t\sinh t\\
+x_2(t) = \sinh t + t\cosh t\\
+p_1(t) = 2 \sinh t\\
+p_2(t) = 2 \cosh t\\
+\end{cases}
+$
+\subsubsection{Решение системы при значениях параметра $\alpha \neq 0$}
+Для численного решения системы нам не хватает информации о значениях функций $p_1(t)$, $p_2(t)$ при $t = 0$.
+Для нахождения $p_1 (0) = a_1$, $p_2(0) = a_2$ воспользуемся модифицированным методом Ньютона.\\
+При этом мы используем следующие параметры:
+\begin{enumerate}
+\item
+$\varepsilon$~--- желаемая точность решения.
+\item
+$\delta$~--- приращение аргумента при подсчете производных.
+\item
+$\tau$~--- фиксированный шаг метода Рунге-Кутты.
+\end{enumerate}
+\paragraph{Первая итерация.}
+
+В качестве начальных значений $a_1$, $a_2$ берем $p_1(0)$, $p_2(0)$ при значении параметра $\alpha = 0$
+$$ a_1^0 = 2\sinh 0 = 0, a_2^0 = 2\cosh 0 = 2.$$
+Продолжаем траекторию при помощи методы Рунге-Кутты, получаем
+$$c_1^0 := p_1(1), c_2^0 := p_2(1)$$
+Строим вектор невязки
+$$r^0 = c^0 - x(1) = \left(c_1^0 - \sinh 1, c_2^0 - e\right)$$
+Считаем невязку
+$$s^0 = \|r^0\|_2$$
+Если $\left|s^0\right| < \varepsilon$, положим $a_1 := a_1^0$, $a_2 := a_2^0$ и заканчиваем работу алгоритма. Иначе переходим к следующему шагу
+\paragraph{Все последующие итерации.}
+Пусть посчитаны $a_1^k$, $a_2^k$.
+\begin{enumerate}
+\item
+Продолжаем траекторию при помощи метода Рунге-Кутты, получаем
+$$c_1^k := p_1(1), c_2^k := p_2(1)$$
+Строим вектор невязки
+$$r^k = c^k - x(1) = \left(c_1^k - \sinh 1, c_2^k - e\right)$$
+\item
+Положим $\gamma_k = 1$\\
+Находим следующее приближение краевых условий
+$a^{k+1} = \left(a^k\right)^T - \gamma_k\left(\dot r^k\right)^{-1}\left(r^k\right)^T$, где
+$\dot r^k$~--- матрица Якоби $J = \left(j_{ps}\right)$, которая считается следующим образом:
+$$j_{ps} = \frac{r^k_p\left(a^k_1,\ldots,a_s^k + \delta, \ldots\right) - r^k_p\left(a^k_1,\ldots,a_s^k, \ldots\right)}{\delta}$$
+Считаем невязку с использованием нормировки Федоренко:
+$$s^{k+1} = \|r^{k+1}\|_\Phi = \sqrt{\frac{r_1^2}{j_{11}^2+j_{12}^2} + \frac{r_2^2}{j_{21}^2+j_{22}^2} }$$
+\begin{enumerate}
+\item
+Если $\left|s^{k+1}\right| < \varepsilon$, положим $a_1 := a_1^{k+1}$, $a_2 := a_2^{k+1}$, и завершаем поиск начальных условий.
+\item
+Если $\left|s^{k+1}\right| > \left|s^{k}\right|$, уменьшим $\gamma_k$ в 2 раза и повторим итерацию, начиная с момента поиска следующего приближения краевых условий. 
+\item
+Иначе идём на следующую итерацию алгоритма.
+\end{enumerate}
+\end{enumerate}
+Таким образом, мы построили начальные условия для функций $p_1(t)$ и $p_2(t)$ и теперь можем проинтегрировать систему с помощью метода Рунге-Кутты.\\
+Также из условий стационарности по $u(t)$ имеем $u(t) = p_2(t)$. Таким образом, мы можем считать значения экстремали $u(t)$ в различных точках отрезка $[0,1]$.
+\subsection{Вычисление значения функционала}
+Значение функционала ищется следующим способом:\\
+\begin{enumerate}
+\item 
+Интеграл по отрезку $[0,1]$ разбивается на сумму интегралов по отрезкам разбиения:
+$$ \int\limits_0^1 u^2(t) dt = \sum\limits_k\int\limits_{x_k}^{x_k+1}u^2(t)dt$$
+\item
+На каждом отрезке разбиения интеграл приближается по формуле Симпсона:\\
+$$\int\limits_{x_k}^{x_k+1}u^2(t)dt = \frac{h}{6}\left(u^2\left(x_k\right) + 4u^2\left(\frac{x_k + x_{x+1}}{2}\right)+u^2\left(x_{k+1}\right)\right)$$
+где $h = x_{k+1}-x_{k} = 2\tau$~--- шаг разбиения.
+\end{enumerate}
+\section{Численные результаты}
+\begin{tabular}[t]{||l|l|l|l|l||}
+\hline
+$\alpha$ & точность значения функционала & $p_1(0)$ & $p_2(0)$ & значение функционала\\
+\hline\hline
+$0$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$0$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$0$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$0{,}01$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$0{,}01$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$0{,}01$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$0{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$0{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$0{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$1{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$1{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$1{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$10{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$10{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+$10{,}5$& $1\cdot 10^{-4}$ & $0$ & $0$ & 0\\
+\hline
+\end{tabular}
+\end{document}
