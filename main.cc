@@ -20,7 +20,7 @@ int main () {
 
   EPS = precision;
   double step_length = sqrt(EPS) / 10;
-  size_t runge_kutta_steps = 1. / step_length;
+  uint32_t runge_kutta_steps = 1. / step_length;
   runge_kutta_steps += (runge_kutta_steps % 2);
   step_length = 1. / runge_kutta_steps;
   DELTA = step_length;

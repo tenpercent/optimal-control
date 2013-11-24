@@ -21,7 +21,7 @@ double simpson_formula (
 
 double calculate_functional (
     double const                  step_length,  // step
-    size_t const                  total_steps,    // step numbers
+    uint32_t const                total_steps,  // step numbers
     boundary_conditions const &   bc_start, // start conditions
     double const                  parameter // parameter
 ) 
@@ -31,7 +31,7 @@ double calculate_functional (
   
   bc_left = bc_start;
   
-  for (size_t i = 0; i < total_steps; ++i) {
+  for (uint32_t i = 0; i < total_steps; ++i) {
     bc_middle = runge_kutta_method (0.5 * step_length, 1, bc_left, parameter);
     bc_right = runge_kutta_method (0.5 * step_length, 1, bc_middle, parameter);
     sum += simpson_formula (bc_left, bc_middle, bc_right, step_length);

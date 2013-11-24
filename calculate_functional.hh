@@ -1,6 +1,5 @@
+#include <stdint.h>
 #include "boundary_conditions.hh"
-
-typedef unsigned long size_t;
 
 double integrant_value (boundary_conditions const & b1);
 
@@ -13,7 +12,7 @@ double simpson_formula (
 
 double calculate_functional (
     double const                  step_length,  // step
-    size_t const                  total_steps,    // step numbers
+    uint32_t const                total_steps,  // step numbers
     boundary_conditions const &   bc_start, // start conditions
     double const                  parameter // parameter
 );

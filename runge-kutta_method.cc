@@ -17,7 +17,7 @@ boundary_conditions get_ode_system_right_part_value (
 
 boundary_conditions runge_kutta_method (
     double const                    step_length,  // step length
-    size_t const                    total_steps,    // total steps
+    uint32_t const                  total_steps,  // total steps
     boundary_conditions const &     bc_initial, // initial boundary conditions
     double const                    parameter // parameter
 )
@@ -25,7 +25,7 @@ boundary_conditions runge_kutta_method (
   boundary_conditions q1, q2, q3, q4, answer;  
   answer = bc_initial;
   
-  for (size_t i = 0; i < total_steps; ++i) {
+  for (uint32_t i = 0; i < total_steps; ++i) {
     q1 = get_ode_system_right_part_value (answer, parameter)           * step_length;  
     q2 = get_ode_system_right_part_value (answer + q1 * .5, parameter) * step_length;
     q3 = get_ode_system_right_part_value (answer + q2 * .5, parameter) * step_length;  

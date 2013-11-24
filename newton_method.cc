@@ -9,7 +9,7 @@ void get_jakobi_matrix_values (
     double & J22,
     boundary_conditions const & bc_start,
     double const step_length,
-    size_t const total_steps,
+    uint32_t const total_steps,
     double parameter
 ) 
 {
@@ -38,14 +38,14 @@ void get_jakobi_matrix_values (
 
 int newton_method (
     double const                 tau,  // step
-    size_t const                 n,    // step numbers
+    uint32_t const               n,    // step numbers
     boundary_conditions &        bc_0, // conditions in 0
     boundary_conditions &        bc_1, // conditions in 1
     double const                 alpha // parametr
 )
 {
   boundary_conditions start, ret1, ret2;
-  size_t i = 0;
+  uint32_t i = 0;
   double J11, J12, J21, J22, gamma, next_error, residual, k1, k2, det, next_p1, next_p2;
   
   start = bc_0;
