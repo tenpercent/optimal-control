@@ -1,5 +1,5 @@
 CC = g++ $(CFLAGS)
-CFLAGS = -O2
+CFLAGS = -O2 -Wall
 OBJFILES = main.o newton_method.o runge-kutta_method.o calculate_functional.o boundary_conditions.o
 
 all: optcontrol
