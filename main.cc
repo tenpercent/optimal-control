@@ -6,7 +6,7 @@
 #include "defs.hh"
 
 void print_boundary_conditions (
-    boundary_conditions const & bc_in_0, 
+    boundary_conditions const & bc_in_0,
     boundary_conditions const & bc_in_1
 );
 double get_alpha (void);
@@ -24,20 +24,20 @@ int main () {
   runge_kutta_steps += (runge_kutta_steps % 2);
   step_length = 1. / runge_kutta_steps;
   DELTA = step_length;
-  
+
   boundary_conditions bc_in_0, bc_in_1;
   set_initial_boundary_conditions (bc_in_0, bc_in_1);
-  
+
   if (newton_method (step_length, runge_kutta_steps, bc_in_0, bc_in_1, parameter)) {
     printf ("Acceleration of Newton algorithm broke down.\n");
     return 1;
   }
-  
+
   print_boundary_conditions (bc_in_0, bc_in_1);
 
-  double result = calculate_functional (step_length, runge_kutta_steps, bc_in_0, parameter);  
+  double result = calculate_functional (step_length, runge_kutta_steps, bc_in_0, parameter);
   printf ("answer = %.14le\n", result);
-  
+
   return 0;
 }
 
@@ -56,9 +56,9 @@ double get_precision (void) {
 }
 
 void print_boundary_conditions (
-    boundary_conditions const & bc_in_0, 
-    boundary_conditions const & bc_in_1) 
-{ 
+    boundary_conditions const & bc_in_0,
+    boundary_conditions const & bc_in_1)
+{
   printf ("Вoundary conditions:\n");
   printf ("\tx1(0) = %.4lf\tx1(1) = %.4lf\n", bc_in_0.x1, bc_in_1.x1);
   printf ("\tx2(0) = %.4lf\tx2(1) = %.4lf\n", bc_in_0.x2, bc_in_1.x2);

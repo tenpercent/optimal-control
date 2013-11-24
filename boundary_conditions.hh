@@ -1,5 +1,5 @@
-#ifndef BOUNDARYCONDITIONS 
-#define BOUNDARYCONDITIONS 
+#ifndef BOUNDARYCONDITIONS
+#define BOUNDARYCONDITIONS
 
 struct boundary_conditions {
   double x1;
