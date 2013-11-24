@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cmath>
 
 #include "newton_method.hh"
 #include "calculate_functional.hh"
@@ -17,8 +18,12 @@ int main () {
   double const parameter = get_alpha ();
   double const precision = get_precision ();
 
-  size_t const runge_kutta_steps = 1000;
-  double const step_length = 1. / runge_kutta_steps;
+  EPS = precision;
+  double step_length = sqrt(EPS) / 10;
+  size_t runge_kutta_steps = 1. / step_length;
+  runge_kutta_steps += (runge_kutta_steps % 2);
+  step_length = 1. / runge_kutta_steps;
+  DELTA = step_length;
   
   boundary_conditions bc_in_0, bc_in_1;
   set_initial_boundary_conditions (bc_in_0, bc_in_1);
