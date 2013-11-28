@@ -20,10 +20,10 @@ double simpson_formula (
 }
 
 double calculate_functional (
-    double const                  step_length,  // step
-    size_t const                  total_steps,    // step numbers
-    boundary_conditions const &   bc_start, // start conditions
-    double const                  parameter // parameter
+    double const                  step_length,
+    size_t const                  total_steps,
+    boundary_conditions const &   bc_start,
+    double const                  parameter
 ) 
 {
   boundary_conditions bc_left, bc_middle, bc_right;
