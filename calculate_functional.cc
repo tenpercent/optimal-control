@@ -32,8 +32,8 @@ double calculate_functional (
   bc_left = bc_start;
   
   for (size_t i = 0; i < total_steps; ++i) {
-    bc_middle = runge_kutta_method (0.5 * step_length, 1, bc_left, parameter);
-    bc_right = runge_kutta_method (0.5 * step_length, 1, bc_middle, parameter);
+    bc_middle = integrator (0.5 * step_length, 1, bc_left, parameter);
+    bc_right = integrator (0.5 * step_length, 1, bc_middle, parameter);
     sum += simpson_formula (bc_left, bc_middle, bc_right, step_length);
     bc_left = bc_right;
   }

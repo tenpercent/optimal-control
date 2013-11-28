@@ -119,7 +119,6 @@ boundary_conditions runge_kutta_method_6 (
   };
 
   answer = bc_initial;
-  
   for (
       size_t tot_steps_cnt = 0; 
       tot_steps_cnt < total_steps; 
@@ -149,7 +148,7 @@ boundary_conditions runge_kutta_method_6 (
   return answer;
 }
 
-boundary_conditions runge_kutta_method (
+boundary_conditions integrator (
     double const                    step_length,
     size_t const                    total_steps,
     boundary_conditions const &     bc_initial,
@@ -157,4 +156,5 @@ boundary_conditions runge_kutta_method (
 )
 {
   return runge_kutta_method_6 (step_length, total_steps, bc_initial, parameter);
+  // return runge_kutta_method_4 (step_length, total_steps, bc_initial, parameter);
 }

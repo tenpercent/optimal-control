@@ -7,7 +7,7 @@ boundary_conditions get_ode_system_right_part_value (
     double const parameter
 );
 
-boundary_conditions runge_kutta_method (
+boundary_conditions integrator (
     double const                    step_length,
     size_t const                    total_steps,
     boundary_conditions const &     bc_initial, 
