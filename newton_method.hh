@@ -7,4 +7,3 @@ int newton_method (
     boundary_conditions &         bc_1,
     double const                  alpha
 );
-

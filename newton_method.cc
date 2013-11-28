@@ -2,46 +2,12 @@
 #include "newton_method.hh"
 #include "defs.hh"
 
-void get_jakobi_matrix_values (
-    double & J11, 
-    double & J12, 
-    double & J21, 
-    double & J22,
-    boundary_conditions const & bc_start,
-    double const step_length,
-    size_t const total_steps,
-    double parameter
-) 
-{
-  boundary_conditions bc_start_copy, extrapolate_original, extrapolate_variated;
-  
-  bc_start_copy = bc_start;
-  extrapolate_original = 
-    runge_kutta_method (step_length, total_steps, bc_start_copy, parameter);
-
-  bc_start_copy = bc_start; // not necessary
-  bc_start_copy.p1 += DELTA;
-  extrapolate_variated = 
-    runge_kutta_method (step_length, total_steps, bc_start_copy, parameter);
-
-  J11 = (extrapolate_variated.x1 - extrapolate_original.x1) / DELTA;
-  J12 = (extrapolate_variated.x2 - extrapolate_original.x2) / DELTA;
-
-  bc_start_copy = bc_start; // strictly necessary
-  bc_start_copy.p2 += DELTA;
-  extrapolate_variated = 
-    runge_kutta_method (step_length, total_steps, bc_start_copy, parameter);
-
-  J21 = (extrapolate_variated.x1 - extrapolate_original.x1) / DELTA;
-  J22 = (extrapolate_variated.x2 - extrapolate_original.x2) / DELTA;
-}
-
 int newton_method (
-    double const                 tau,  // step
-    size_t const                 n,    // step numbers
+    double const                 tau,  // step length
+    size_t const                 n,    // step number
     boundary_conditions &        bc_0, // conditions in 0
     boundary_conditions &        bc_1, // conditions in 1
-    double const                 alpha // parametr
+    double const                 alpha // parameter
 )
 {
   boundary_conditions start, ret1, ret2;
@@ -50,12 +16,10 @@ int newton_method (
   
   start = bc_0;
   
-  while (i < MAX_ITER)
+  while (i < MAX_ITERATIONS)
     {
-      // Инициализация итерации
       gamma = 1.0;
 
-      // Найдём элементы матрицы Якоби
       start.p1 = bc_0.p1;
       start.p2 = bc_0.p2;
 
@@ -77,13 +41,11 @@ int newton_method (
       J12 = (ret2.x1 - ret1.x1) / DELTA;
       J22 = (ret2.x2 - ret1.x2) / DELTA;
 
-      // Считаем невязку с нормировкой Федоренко
       k1 = J11 * J11 + J12 * J12;
       k2 = J21 * J21 + J22 * J22;
 
       residual = sqrt ((ret1.x1 - bc_1.x1) * (ret1.x1 - bc_1.x1) / k1 + (ret1.x2 - bc_1.x2) * (ret1.x2 - bc_1.x2) / k2);
 
-      // Если норма достаточно маленькая, заканчиваем алгоритм
       if (residual < EPS)
         {
           bc_1.p1 = ret1.p1;
@@ -91,9 +53,8 @@ int newton_method (
           return 0;
         }
         
-      next_error = 1e+300;
+      next_error = 1e+10;
 
-      // Если нет, ищем начальные условия так, чтобы норма уменьшилась относительно предыдущего шага
       while (next_error > residual)
         {
           det = J11 * J22 - J12 * J21;
@@ -127,7 +88,6 @@ int newton_method (
           J12 = (ret2.x1 - ret1.x1) / DELTA;
           J22 = (ret2.x2 - ret1.x2) / DELTA;
 
-          // Считаем невязку с нормировкой Федоренко
           k1 = J11 * J11 + J12 * J12;
           k2 = J21 * J21 + J22 * J22;
 
@@ -143,7 +103,6 @@ int newton_method (
               return 0;
             }
         }
-      // Заканчиваем итерацию
       bc_0.p1 = next_p1;
       bc_0.p2 = next_p2;
       bc_1.p1 = ret1.p1;
