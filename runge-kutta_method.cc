@@ -103,8 +103,6 @@ boundary_conditions runge_kutta_method_6 (
 {
   size_t const TOTAL_INNER_STEPS = 6;
   boundary_conditions inner_steps[TOTAL_INNER_STEPS];
-  boundary_conditions inner_step_helper;
-  boundary_conditions answer;
 
   double const sum_coef[TOTAL_INNER_STEPS] = {
     16./135, 0., 6656./12825, 28561./56430, -9./50, 2./55
@@ -118,7 +116,9 @@ boundary_conditions runge_kutta_method_6 (
   {-8./27,      2.,         -3544./2565, 1859./4104, -11./40}
   };
 
-  answer = bc_initial;
+  boundary_conditions inner_step_helper;
+  boundary_conditions answer = bc_initial;
+  
   for (
       size_t tot_steps_cnt = 0; 
       tot_steps_cnt < total_steps; 
@@ -128,7 +128,8 @@ boundary_conditions runge_kutta_method_6 (
     for (
       size_t in_steps_cnt = 0; 
       in_steps_cnt < TOTAL_INNER_STEPS; 
-      ++in_steps_cnt) 
+      ++in_steps_cnt
+      ) 
     {
       inner_step_helper = answer;
       for (size_t i = 0; i < in_steps_cnt; ++i) {
@@ -140,7 +141,8 @@ boundary_conditions runge_kutta_method_6 (
     for (
       size_t in_steps_cnt = 0; 
       in_steps_cnt < TOTAL_INNER_STEPS; 
-      ++in_steps_cnt) 
+      ++in_steps_cnt
+      ) 
     {
       answer += inner_steps[in_steps_cnt] * sum_coef[in_steps_cnt];
     }

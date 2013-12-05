@@ -1,6 +1,5 @@
 #include "boundary_conditions.hh"
-
-typedef unsigned long size_t;
+#include <cstddef>
 
 boundary_conditions get_ode_system_right_part_value (
     boundary_conditions const & bc_value, 

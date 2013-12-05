@@ -13,7 +13,6 @@ void set_initial_boundary_conditions (boundary_conditions & bc_in_0, boundary_co
 
 int main () {
   double const parameter = get_alpha ();
-
   double const step_length = get_step_length ();
 
   if (step_length < MIN_DOUBLE) {
@@ -22,9 +21,7 @@ int main () {
   }
 
   size_t const runge_kutta_steps = 1. / step_length;
-
-  EPS = 10 * step_length * step_length * step_length * step_length;
-  
+  EPS = 10 * step_length * step_length * step_length * step_length; 
   DELTA = 100 * EPS;
   
   boundary_conditions bc_in_0, bc_in_1;

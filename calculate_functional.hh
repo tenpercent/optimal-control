@@ -1,6 +1,5 @@
 #include "boundary_conditions.hh"
-
-typedef unsigned long size_t;
+#include <cstddef>
 
 double integrant_value (boundary_conditions const & b1);
 
